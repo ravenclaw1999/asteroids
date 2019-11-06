@@ -24,23 +24,25 @@ class Ship {
     this.dy += Math.sin(this.angle)
   }
   step() {
+    // apply speed dx,dy to ship position x,y
     this.x += this.dx
     this.y += this.dy
 
-    //slow down
+    // slow down by bringing speed closer to 0
     this.dx *= 0.98
     this.dy *= 0.98
 
-    if(this.x > canvas.width + this.size){
+    // check if out of bound, to wrap to the other side
+    if (this.x > canvas.width + this.size) {
       this.x = 0
     }
-    if(this.x < 0 - this.size){
+    if (this.x < 0 - this.size) {
       this.x = canvas.width
     }
-    if(this.y > canvas.height + this.size){
+    if (this.y > canvas.height + this.size){
       this.y = 0
     }
-    if(this.y < 0 - this.size){
+    if (this.y < 0 - this.size) {
       this.y = canvas.height
     }
   }
@@ -52,3 +54,18 @@ class Ship {
     ctx.restore()
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

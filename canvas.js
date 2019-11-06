@@ -18,7 +18,7 @@ function loadSprite(url) {
   }
 }
 let shipSprite = loadSprite('ship.png')
-let meteorSprite = loadSprite('rock.png')
+let rockSprite = loadSprite('rock.png')
 
 // draw helpers
 function erase() {
