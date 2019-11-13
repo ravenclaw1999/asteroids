@@ -1,8 +1,8 @@
 
 // define classes to track our state
+// refactoring - rearranging code to make it cleaner
 class Ship {
   constructor() {
-    this.sprite = shipSprite.image
     // x,y describe the center of the ship
     this.x = canvas.width / 2
     this.y = canvas.height / 2
@@ -22,6 +22,11 @@ class Ship {
   thrust() {
     this.dx += Math.cos(this.angle)
     this.dy += Math.sin(this.angle)
+  }
+  pewpew(){
+    let laserDX = 10 * Math.cos(this.angle)
+    let laserDY = 10 * Math.sin(this.angle)
+    return new Laser(this.x, this.y, laserDX, laserDY)
   }
   step() {
     // apply speed dx,dy to ship position x,y
@@ -50,7 +55,13 @@ class Ship {
     ctx.save()
     ctx.translate(this.x, this.y)
     ctx.rotate(this.angle)
-    ctx.drawImage(this.sprite, -this.size / 2, -this.size / 2, this.size, this.size)
+    ctx.drawImage(
+      shipSprite.image,
+      -this.size / 2,
+      -this.size / 2,
+      this.size,
+      this.size
+    )
     ctx.restore()
   }
 }

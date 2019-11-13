@@ -1,15 +1,13 @@
 
 // game state
 let ship = new Ship()
-let lasers = [
-  new Laser(ship.x, ship.y)
-]
+let lasers = []
 let rocks = [
-   new Rock(),
-   new Rock(),
-   new Rock(),
-   new Rock(),
-   new Rock(),
+  new Rock(),
+  new Rock(),
+  new Rock(),
+  new Rock(),
+  new Rock(),
 ]
 let keyPressed = {}
 
@@ -20,9 +18,19 @@ window.addEventListener('keydown', event => {
 window.addEventListener('keyup', event => {
   keyPressed[event.code] = false
 })
+window.addEventListener('keypress', event => {
+  if(event.code === 'Space'){
+    lasers.push(ship.pewpew())
+  }
+})
 
 // game loop
+let ticks = 0
 function loop() {
+  ticks += 1
+  if(ticks % 300 === 0){
+    rocks.push(new Rock())
+  }
   // check user input to change game state
   if (keyPressed['ArrowLeft']) {
     ship.rotateLeft()
@@ -33,17 +41,21 @@ function loop() {
   if (keyPressed['ArrowUp']) {
     ship.thrust()
   }
-  if (keyPressed['Space']){
-    let newLaser = new Laser(ship.x, ship.y)
-    lasers.push(newLaser)
-  }
 
   // state steps through time
   ship.step()
   lasers.forEach(l => l.step())
   rocks.forEach(r => r.step())
 
+  rocks.forEach(r => {
+    lasers.forEach(l => {
+      r.checkForHit(l)
+    })
+  })
 
+  // remove hit things 
+  rocks = rocks.filter(r => r.hit === false)
+  lasers = lasers.filter(l => l.hit === false)
   // draw all
   erase()
   ship.draw()
@@ -61,3 +73,7 @@ async function loadGame() {
   loop()
 }
 loadGame()
+
+
+
+
